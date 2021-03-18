@@ -15,12 +15,12 @@
           Documentation
         </a>
         <a
-          href="https://github.com/nuxt/nuxt.js"
+          href="https://github.com/ilyafefelov/nuxtSSR/"
           target="_blank"
           rel="noopener noreferrer"
           class="button--grey"
         >
-          GitHub
+          GitHub Code
         </a>
       </div>
     </div>
