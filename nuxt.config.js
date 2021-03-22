@@ -19,6 +19,10 @@ export default {
   css: [
   ],
 
+  env: {
+    // strapiUrl: process.env.STRAPI_URL || 'http://localhost:1337'
+  },
+
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
   ],

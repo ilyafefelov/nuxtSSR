@@ -44,6 +44,10 @@ export default {
     }
   },
   async mounted () {
+    // eslint-disable-next-line no-console
+    // console.log('process.env = ', process.env)
+    // eslint-disable-next-line no-console
+    console.log('process.env = ', process.env.STRAPI_URL)
     try {
       this.posts = await this.$strapi.$posts.find()
     } catch (error) {
