@@ -26,7 +26,7 @@
           {{ error }}
         </div>
         <ul v-else>
-          <li v-for="post in posts" :key="post.id">
+          <li v-for="post in posts" :key="post._id">
             {{ post.title }}
           </li>
         </ul>
@@ -51,10 +51,11 @@ export default {
   async fetch () {
     try {
       // const response = await this.$strapi.$posts.find()
-      const { ...response } = await this.$strapi.graphql({
+      const { posts } = await this.$strapi.graphql({
         query: `
           query {
             posts {
+              _id
               title
               body
             }
@@ -62,8 +63,8 @@ export default {
         `
       })
       // eslint-disable-next-line no-console
-      console.log('response =', response)
-      this.posts = await response.posts
+      console.log('response =', posts)
+      this.posts = await posts
       return this.posts
       // eslint-disable-next-line no-console
       // console.log(await this.$strapi.$posts.find().devalue())
