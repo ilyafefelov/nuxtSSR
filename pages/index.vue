@@ -28,6 +28,7 @@
         <ul v-else>
           <li v-for="post in posts" :key="post._id">
             {{ post.title }}
+            {{ post._id }}
           </li>
         </ul>
       </div>
