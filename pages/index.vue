@@ -37,19 +37,21 @@
 
 <script>
 export default {
+  //
+  // async asyncData ({ $http }) {
+  //   const mountains = await $http.$get('https://api.nuxtjs.dev/mountains')
+  //   return { mountains }
+  // },
+  async asyncData ({ $strapi }) {
+    const posts = await $strapi.$posts.find()
+    // eslint-disable-next-line no-console
+    console.log(posts)
+    return { posts }
+  },
   data () {
     return {
       posts: [],
       error: null
-    }
-  },
-  async fetch () {
-    try {
-      this.posts = await this.$strapi.$posts.find()
-      // eslint-disable-next-line no-console
-      console.log(await this.$strapi.$posts.find())
-    } catch (error) {
-      this.error = error
     }
   },
   fetchOnServer: false,
