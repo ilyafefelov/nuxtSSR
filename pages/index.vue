@@ -46,13 +46,25 @@ export default {
   async fetch () {
     try {
       const response = await this.$strapi.$posts.find()
+      // const { ...response } = await this.$strapi.graphql({
+      //   query: `
+      //     query {
+      //       posts {
+      //         title
+      //         body
+      //       }
+      //     }
+      //   `
+      // })
       // eslint-disable-next-line no-console
-      console.log(response)
-      this.posts = JSON.parse(JSON.stringify(response))
+      console.log('response =', response)
+      this.posts = await response
+      return this.posts
       // eslint-disable-next-line no-console
       // console.log(await this.$strapi.$posts.find().devalue())
     } catch (error) {
-      this.error = error
+      this.error = await error
+      return this.error
     }
   },
   // async mounted () {
