@@ -50,17 +50,17 @@ export default {
   },
   async fetch () {
     try {
-      const response = await this.$strapi.$posts.find()
-      // const { ...response } = await this.$strapi.graphql({
-      //   query: `
-      //     query {
-      //       posts {
-      //         title
-      //         body
-      //       }
-      //     }
-      //   `
-      // })
+      // const response = await this.$strapi.$posts.find()
+      const { ...response } = await this.$strapi.graphql({
+        query: `
+          query {
+            posts {
+              title
+              body
+            }
+          }
+        `
+      })
       // eslint-disable-next-line no-console
       console.log('response =', response)
       this.posts = await response
