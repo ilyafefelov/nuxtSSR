@@ -46,6 +46,8 @@ export default {
   async fetch () {
     try {
       this.posts = await this.$strapi.$posts.find()
+      // eslint-disable-next-line no-console
+      console.log(this.posts)
     } catch (error) {
       this.error = error
     }
