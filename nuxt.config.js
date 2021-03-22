@@ -1,5 +1,9 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  render: {
+    asyncScripts: true,
+    ssrLog: true
+  },
   head: {
     title: 'nuxt-on-vercel',
     htmlAttrs: {
