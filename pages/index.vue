@@ -37,34 +37,19 @@
 
 <script>
 export default {
-  async asyncData ({ $strapi, store, error }) {
-    try {
-      const posts = await $strapi.$posts.find()
-      // store.commit('setFeaturedProducts', response)
-      return { posts }
-    } catch (e) {
-      const error = e
-      error(e)
-    }
-    return { error }
-  },
   data () {
     return {
       posts: [],
       error: null
     }
+  },
+  async fetch () {
+    try {
+      this.posts = await this.$strapi.$posts.find()
+    } catch (error) {
+      this.error = error
+    }
   }
-  // async mounted () {
-  //   // eslint-disable-next-line no-console
-  //   // console.log('process.env = ', process.env)
-  //   // eslint-disable-next-line no-console
-  //   console.log('process.env = ', process.env.STRAPI_URL)
-  //   try {
-  //     this.posts = await this.$strapi.$posts.find()
-  //   } catch (error) {
-  //     this.error = error
-  //   }
-  // }
 }
 </script>
 
