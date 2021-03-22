@@ -64,7 +64,7 @@ export default {
         `
       })
       // eslint-disable-next-line no-console
-      console.log('response =', posts)
+      // console.log('response =', posts)
       this.posts = await posts
       return this.posts
       // eslint-disable-next-line no-console
