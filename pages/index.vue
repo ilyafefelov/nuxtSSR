@@ -47,7 +47,7 @@ export default {
     try {
       this.posts = await this.$strapi.$posts.find()
       // eslint-disable-next-line no-console
-      console.log(this.posts)
+      console.log(await this.$strapi.$posts.find())
     } catch (error) {
       this.error = error
     }
