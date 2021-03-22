@@ -52,7 +52,7 @@ export default {
       this.error = error
     }
   },
-  fetchOnServer: false,
+  fetchOnServer: true,
   // fetchKey: 'post'
   fetchKey (getCounter) {
     // getCounter is a method that can be called to get the next number in a sequence
