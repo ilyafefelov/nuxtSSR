@@ -22,13 +22,35 @@
         >
           GitHub Code
         </a>
+        <div v-if="error">
+          {{ error }}
+        </div>
+        <ul v-else>
+          <li v-for="post in posts" :key="post.id">
+            {{ post.title }}
+          </li>
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      posts: [],
+      error: null
+    }
+  },
+  async mounted () {
+    try {
+      this.posts = await this.$strapi.$posts.find()
+    } catch (error) {
+      this.error = error
+    }
+  }
+}
 </script>
 
 <style>
