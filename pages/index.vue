@@ -39,7 +39,12 @@
 export default {
   data () {
     return {
-      posts: [],
+      posts: [
+        {
+          title: 'placeholder',
+          body: 'plaveholderBOdytext sdkfnsdfnk dskfksdnf'
+        }
+      ],
       error: null
     }
   },
