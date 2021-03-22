@@ -49,7 +49,7 @@ export default {
       // eslint-disable-next-line no-console
       console.log(await this.$strapi.$posts.find())
     } catch (error) {
-      this.error = error
+      this.error = await error
     }
   }
 }
