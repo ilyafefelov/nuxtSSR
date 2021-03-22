@@ -63,7 +63,7 @@ export default {
       })
       // eslint-disable-next-line no-console
       console.log('response =', response)
-      this.posts = await response
+      this.posts = await response.posts
       return this.posts
       // eslint-disable-next-line no-console
       // console.log(await this.$strapi.$posts.find().devalue())
