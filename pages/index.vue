@@ -45,14 +45,28 @@ export default {
   },
   async fetch () {
     try {
-      this.posts = await this.$strapi.$posts.find()
+      const response = await this.$strapi.$posts.find()
       // eslint-disable-next-line no-console
-      console.log(await this.$strapi.$posts.find())
+      console.log(response)
+      this.posts = JSON.parse(JSON.stringify(response))
+      // eslint-disable-next-line no-console
+      // console.log(await this.$strapi.$posts.find().devalue())
     } catch (error) {
       this.error = error
     }
   },
-  fetchOnServer: false,
+  // async mounted () {
+  //   try {
+  //     // eslint-disable-next-line no-console
+  //     console.log(await this.$strapi.$posts.find().devalue())
+  //     this.posts = await this.$strapi.$posts.find().devalue()
+  //     // eslint-disable-next-line no-console
+  //     // console.log(await this.$strapi.$posts.find())
+  //   } catch (error) {
+  //     this.error = error
+  //   }
+  // },
+  fetchOnServer: true,
   // fetchKey: 'post'
   fetchKey (getCounter) {
     // getCounter is a method that can be called to get the next number in a sequence
