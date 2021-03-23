@@ -47,7 +47,7 @@
               id: {{ post._id }}
             </p>
             <p class="leading-6 text-left mb-2">
-              {{ post.body.slice(0, 426) }}
+              {{ post.body.slice(0, 424) }}
             </p>
           </li>
         </ul>
