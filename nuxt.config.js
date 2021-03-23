@@ -28,8 +28,7 @@ export default {
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: ['~/plugins/vue-swal'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -48,11 +47,12 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
     '@nuxtjs/strapi'
+    // 'vue-sweetalert2/nuxt'
   ],
 
   strapi: {
     // Options
-    entities: ['posts', 'users'],
+    entities: ['posts', 'users', 'subscribers'],
     url: process.env.STRAPI_URL || 'http://localhost:1337'
   },
 
@@ -64,5 +64,22 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    /*
+     ** Run ESLint on save
+     */
+    extend (config, ctx) {
+      if (ctx.dev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    },
+    /*
+     ** Add vue-swal
+     */
+    vendor: ['vue-swal']
   }
 }

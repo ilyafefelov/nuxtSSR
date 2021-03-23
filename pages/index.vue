@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
+      <!-- <Logo /> -->
       <h1 class="title">
         nuxt-on-vercel
       </h1>
@@ -23,6 +23,12 @@
           GitHub Code
         </a>
         <div v-if="error">
+          {{ console.warn("error in tem",error) }}
+        </div>
+        <ul v-else>
+          <div>{{ allPosts.length }}</div>
+        </ul>
+        <!-- <div v-if="error">
           {{ error }}
         </div>
         <ul v-else>
@@ -30,50 +36,76 @@
             {{ post.title }}
             {{ post._id }}
           </li>
-        </ul>
+        </ul> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
+  async asyncData ({ $strapi, store, error }) {
+    try {
+      const response = await $strapi.$posts.find()
+      store.commit('setPosts', response)
+    } catch (e) {
+      // eslint-disable-next-line no-console
+      const err = error(e)
+      // eslint-disable-next-line no-console
+      console.warn('ERROR on getting posts', err.message)
+      error = err.message
+      return error
+    }
+  },
   data () {
     return {
-      posts: [
-        {
-          title: 'placeholder',
-          body: 'plaveholderBOdytext sdkfnsdfnk dskfksdnf'
-        }
-      ],
+      posts: [],
       error: null
     }
   },
-  async fetch () {
-    try {
-      // const response = await this.$strapi.$posts.find()
-      const { posts } = await this.$strapi.graphql({
-        query: `
-          query {
-            posts {
-              _id
-              title
-              body
-            }
-          }
-        `
-      })
-      // eslint-disable-next-line no-console
-      // console.log('response =', posts)
-      this.posts = await posts
-      return this.posts
-      // eslint-disable-next-line no-console
-      // console.log(await this.$strapi.$posts.find().devalue())
-    } catch (error) {
-      this.error = await error
-      return this.error
-    }
+  computed: {
+    ...mapGetters(['allPosts'])
   },
+  // data () {
+  //   return {
+  //     posts: [
+  //       {
+  //         title: 'placeholder',
+  //         body: 'plaveholderBOdytext sdkfnsdfnk dskfksdnf'
+  //       }
+  //     ],
+  //     error: null
+  //   }
+  // },
+  // async fetch () {
+  //   try {
+  //     // const response = await this.$strapi.$posts.find()
+  //     const { posts } = await this.$strapi.graphql({
+  //       query: `
+  //         query {
+  //           posts {
+  //             _id
+  //             title
+  //             body
+  //           }
+  //         }
+  //       `
+  //     })
+  //     // eslint-disable-next-line no-console
+  //     // console.log('response =', posts)
+  //     this.posts = await posts
+  //     return this.posts
+  //     // eslint-disable-next-line no-console
+  //     // console.log(await this.$strapi.$posts.find().devalue())
+  //   } catch (error) {
+  //     this.error = await error
+  //     return this.error
+  //   }
+  // },
+  // computed: {
+  //   ...mapGetters(['allPosts', 'featuredPosts'])
+  // },
   // async mounted () {
   //   try {
   //     // eslint-disable-next-line no-console

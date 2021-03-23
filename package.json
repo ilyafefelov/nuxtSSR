@@ -16,7 +16,8 @@
     "@nuxt/devalue": "^1.2.5",
     "@nuxtjs/axios": "^5.12.5",
     "core-js": "^3.8.3",
-    "nuxt": "^2.15.2"
+    "nuxt": "^2.15.2",
+    "vue-swal": "^1.0.0"
   },
   "devDependencies": {
     "@nuxtjs/eslint-config": "^6.0.0",
