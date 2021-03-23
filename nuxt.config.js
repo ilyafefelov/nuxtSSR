@@ -23,9 +23,9 @@ export default {
   css: [
   ],
 
-  env: {
-    STRAPI_URL: 'https://helpful-topic-279520.ey.r.appspot.com/'
-  },
+  // env: {
+  //   STRAPI_URL: 'https://helpful-topic-279520.ey.r.appspot.com/'
+  // },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['~/plugins/vue-swal'],
