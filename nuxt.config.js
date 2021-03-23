@@ -46,7 +46,8 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
-    '@nuxtjs/strapi'
+    '@nuxtjs/strapi',
+    '@nuxtjs/localtunnel'
     // 'vue-sweetalert2/nuxt'
   ],
 
