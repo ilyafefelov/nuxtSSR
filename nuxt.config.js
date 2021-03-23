@@ -56,6 +56,9 @@ export default {
     entities: ['posts', 'users', 'subscribers'],
     url: process.env.STRAPI_URL || 'http://localhost:1337'
   },
+  tailwindcss: {
+    jit: true
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

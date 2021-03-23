@@ -38,7 +38,7 @@
           <li
             v-for="post in posts"
             :key="post._id"
-            class="post p-6 items-start flex flex-col"
+            class="post p-5 items-start flex flex-col"
           >
             <p class="font-semibold text-xl mb-2">
               {{ post.title }}
