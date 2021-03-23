@@ -77,10 +77,10 @@ export default {
           exclude: /(node_modules)/
         })
       }
-    },
+    }
     /*
      ** Add vue-swal
      */
-    vendor: ['vue-swal']
+    // vendor: ['vue-swal']
   }
 }

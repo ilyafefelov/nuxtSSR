@@ -3,10 +3,10 @@
     <div>
       <!-- <Logo /> -->
       <h1 class="title">
-        nuxt-on-vercel
+        Full-Iron with Nuxt
       </h1>
       <div class="links">
-        <a
+        <!-- <a
           href="https://nuxtjs.org/"
           target="_blank"
           rel="noopener noreferrer"
@@ -21,102 +21,98 @@
           class="button--grey"
         >
           GitHub Code
-        </a>
+        </a> -->
         <div v-if="error">
-          {{ console.warn("error in tem",error) }}
+          {{ console.warn("error in tem", error) }}
         </div>
         <ul v-else>
-          <div>{{ allPosts.length }}</div>
+          <h2 class="subtitle">
+            There are {{ posts.length }} posts in total:
+          </h2>
         </ul>
-        <!-- <div v-if="error">
+        <div v-if="error">
           {{ error }}
         </div>
         <ul v-else>
-          <li v-for="post in posts" :key="post._id">
-            {{ post.title }}
-            {{ post._id }}
+          <!-- {{ allPosts }} -->
+          <li
+            v-for="post in posts"
+            :key="post._id"
+            class="post p-6 items-start flex flex-col"
+          >
+            <p class="font-semibold text-xl mb-2">
+              {{ post.title }}
+            </p>
+            <p class="text-xs mb-4">
+              id: {{ post._id }}
+            </p>
+            <p class="leading-6 text-left mb-2">
+              {{ post.body.slice(0, 424) }}
+            </p>
           </li>
-        </ul> -->
+        </ul>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import {
+  // mapMutations,
+  mapGetters
+} from 'vuex'
 export default {
-  async asyncData ({ $strapi, store, error }) {
-    try {
-      const response = await $strapi.$posts.find()
-      store.commit('setPosts', response)
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      const err = error(e)
-      // eslint-disable-next-line no-console
-      console.warn('ERROR on getting posts', err.message)
-      error = err.message
-      return error
-    }
-  },
+  // async asyncData ({ $strapi, store, error }) {
+  //   try {
+  //     const response = await $strapi.$posts.find()
+  //     store.commit('setPosts', response)
+  //   } catch (e) {
+  //     const err = error(e)
+  //     error = err.message
+  //     return error
+  //   }
+  // },
   data () {
     return {
-      posts: [],
+      // posts: [],
       error: null
     }
   },
-  computed: {
-    ...mapGetters(['allPosts'])
+  async fetch ({ $strapi, store, error }) {
+    try {
+      const res = await $strapi.$posts.find()
+      // const { posts: res } = await $strapi.graphql({
+      //   query: `
+      //     query {
+      //       posts {
+      //         _id
+      //         title
+      //         body
+      //       }
+      //     }
+      //   `
+      // })
+      // eslint-disable-next-line no-console
+      console.log('response = ', res)
+      store.commit('setPosts', res)
+    } catch (error) {
+      this.error = await error
+      return this.error
+    }
   },
-  // data () {
-  //   return {
-  //     posts: [
-  //       {
-  //         title: 'placeholder',
-  //         body: 'plaveholderBOdytext sdkfnsdfnk dskfksdnf'
-  //       }
-  //     ],
-  //     error: null
-  //   }
-  // },
-  // async fetch () {
-  //   try {
-  //     // const response = await this.$strapi.$posts.find()
-  //     const { posts } = await this.$strapi.graphql({
-  //       query: `
-  //         query {
-  //           posts {
-  //             _id
-  //             title
-  //             body
-  //           }
-  //         }
-  //       `
-  //     })
-  //     // eslint-disable-next-line no-console
-  //     // console.log('response =', posts)
-  //     this.posts = await posts
-  //     return this.posts
-  //     // eslint-disable-next-line no-console
-  //     // console.log(await this.$strapi.$posts.find().devalue())
-  //   } catch (error) {
-  //     this.error = await error
-  //     return this.error
-  //   }
-  // },
-  // computed: {
-  //   ...mapGetters(['allPosts', 'featuredPosts'])
-  // },
-  // async mounted () {
-  //   try {
-  //     // eslint-disable-next-line no-console
-  //     console.log(await this.$strapi.$posts.find().devalue())
-  //     this.posts = await this.$strapi.$posts.find().devalue()
-  //     // eslint-disable-next-line no-console
-  //     // console.log(await this.$strapi.$posts.find())
-  //   } catch (error) {
-  //     this.error = error
-  //   }
-  // },
+  computed: {
+    ...mapGetters({
+      posts: 'allPosts'
+    })
+  },
+  async mounted () {
+    try {
+      // eslint-disable-next-line no-console
+      console.log(await this.$strapi.$posts.find())
+    } catch (error) {
+      this.error = error
+    }
+  },
   fetchOnServer: true,
   // fetchKey: 'post'
   fetchKey (getCounter) {
@@ -137,9 +133,23 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
   text-align: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.post {
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  margin: 2em;
 }
 
 .title {
