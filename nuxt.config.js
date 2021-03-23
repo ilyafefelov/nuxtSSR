@@ -24,7 +24,7 @@ export default {
   ],
 
   env: {
-    // strapiUrl: process.env.STRAPI_URL || 'http://localhost:1337'
+    STRAPI_URL: 'https://helpful-topic-279520.ey.r.appspot.com/'
   },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
