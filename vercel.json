@@ -11,19 +11,13 @@
       }
     }
   ],
-  "redirects":[
-    {
-      "source": "/sw.js",
-      "destination": "/_nuxt/static/sw.js"
-    }
-  ],
   "headers": [
     {
       "source": "/service-worker.js",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=43200, immutable"
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     },
@@ -41,12 +35,15 @@
       ]
     },
     {
-      "source": "/sw.js",
+      "src": "/sw.js",
       "dest": "/_nuxt/static/sw.js",
-
+      "headers": {
+        "cache-control": "public, max-age=43200, immutable",
+        "Service-Worker-Allowed": "/"
+      }
     },
     {
-      "source": "/_nuxt/.+",
+      "src": "/_nuxt/.+",
       "headers": {
         "Cache-Control": "max-age=31557600"
       }
