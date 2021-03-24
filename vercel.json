@@ -9,13 +9,19 @@
       }
     }
   ],
+  "redirects":[
+    {
+      "source": "/sw.js",
+      "destination": "/_nuxt/static/sw.js"
+    }
+  ],
   "headers": [
     {
       "source": "/service-worker.js",
       "headers": [
         {
           "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
+          "value": "public, max-age=43200, immutable"
         }
       ]
     },
@@ -35,10 +41,7 @@
     {
       "source": "/sw.js",
       "dest": "/_nuxt/static/sw.js",
-      "headers": {
-        "key": "Cache-Control",
-        "value": "public, max-age=43200, immutable"
-      }
+
     },
     {
       "source": "/_nuxt/.+",
