@@ -5,66 +5,32 @@
       "src": "nuxt.config.js",
       "use": "@nuxtjs/vercel-builder",
       "config": {
-        "serverFiles": ["package.json"]
+        "serverFiles": ["server-middleware/**"]
       }
+    },
+    {
+      "src": "api/**/*.js",
+      "use": "@vercel/node"
     }
   ],
-  "redirects":[
+  "routes": [
     {
-      "source": "/sw.js",
-      "destination": "/_nuxt/static/sw.js"
-    }
-  ],
-  "headers": [
-    {
-      "source": "/service-worker.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=43200, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/api/feed",
-      "headers" : [
-        {
-          "key" : "Content-Type",
-          "value" : "application/rss+xml"
-        },
-        {
-          "key" : "Cache-Control",
-          "value" : "public, max-age=3600"
-        }
-      ]
-    },
-    {
-      "source": "/sw.js",
-      "dest": "/_nuxt/static/sw.js",
-
-    },
-    {
-      "source": "/_nuxt/.+",
+      "src": "/api/contents/(?<id>[^/]+)",
+      "dest": "/api/contents/[id].js?id=$id",
+      "methods": ["GET", "OPTIONS"],
       "headers": {
-        "Cache-Control": "max-age=31557600"
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type"
       }
     },
     {
-      "source": "/(.*)",
-      "headers": [
-        {
-          "key": "X-Content-Type-Options",
-          "value": "nosniff"
-        },
-        {
-          "key": "X-Frame-Options",
-          "value": "DENY"
-        },
-        {
-          "key": "X-XSS-Protection",
-          "value": "1; mode=block"
-        }
-      ]
+      "src": "/api/(.*)",
+      "dest": "/api/$1.js",
+      "methods": ["GET", "OPTIONS"],
+      "headers": {
+        "Access-Control-Allow-Methods": "GET",
+        "Access-Control-Allow-Headers": "Content-Type"
+      }
     }
   ]
 }
