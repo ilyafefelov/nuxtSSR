@@ -1,5 +1,9 @@
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
+  render: {
+    asyncScripts: true,
+    ssrLog: true
+  },
   head: {
     title: 'nuxt-on-vercel',
     htmlAttrs: {
@@ -19,13 +23,12 @@ export default {
   css: [
   ],
 
-  env: {
-    // strapiUrl: process.env.STRAPI_URL || 'http://localhost:1337'
-  },
+  // env: {
+  //   STRAPI_URL: 'https://helpful-topic-279520.ey.r.appspot.com/'
+  // },
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-  ],
+  plugins: ['~/plugins/vue-swal'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -43,13 +46,18 @@ export default {
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/content
-    '@nuxtjs/strapi'
+    '@nuxtjs/strapi',
+    '@nuxtjs/localtunnel'
+    // 'vue-sweetalert2/nuxt'
   ],
 
   strapi: {
     // Options
-    entities: ['posts', 'users'],
+    entities: ['posts', 'users', 'subscribers'],
     url: process.env.STRAPI_URL || 'http://localhost:1337'
+  },
+  tailwindcss: {
+    jit: true
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -60,5 +68,22 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+    /*
+     ** Run ESLint on save
+     */
+    extend (config, ctx) {
+      if (ctx.dev && ctx.isClient) {
+        config.module.rules.push({
+          enforce: 'pre',
+          test: /\.(js|vue)$/,
+          loader: 'eslint-loader',
+          exclude: /(node_modules)/
+        })
+      }
+    }
+    /*
+     ** Add vue-swal
+     */
+    // vendor: ['vue-swal']
   }
 }

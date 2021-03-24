@@ -1,12 +1,12 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
+      <!-- <Logo /> -->
       <h1 class="title">
-        nuxt-on-vercel
+        Full-Iron with Nuxt
       </h1>
       <div class="links">
-        <a
+        <!-- <a
           href="https://nuxtjs.org/"
           target="_blank"
           rel="noopener noreferrer"
@@ -21,13 +21,34 @@
           class="button--grey"
         >
           GitHub Code
-        </a>
+        </a> -->
+        <div v-if="error">
+          {{ console.warn("error in tem", error) }}
+        </div>
+        <ul v-else>
+          <h2 class="subtitle">
+            There are {{ posts.length }} posts in total:
+          </h2>
+        </ul>
         <div v-if="error">
           {{ error }}
         </div>
         <ul v-else>
-          <li v-for="post in posts" :key="post.id">
-            {{ post.title }}
+          <!-- {{ allPosts }} -->
+          <li
+            v-for="post in posts"
+            :key="post._id"
+            class="post p-5 items-start flex flex-col"
+          >
+            <p class="font-semibold text-xl mb-2">
+              {{ post.title }}
+            </p>
+            <p class="text-xs mb-4">
+              id: {{ post._id }}
+            </p>
+            <p class="leading-6 text-left mb-2">
+              {{ post.body.slice(0, 424) }}
+            </p>
           </li>
         </ul>
       </div>
@@ -36,23 +57,63 @@
 </template>
 
 <script>
+import {
+  // mapMutations,
+  mapGetters
+} from 'vuex'
 export default {
+  // async asyncData ({ $strapi, store, error }) {
+  //   try {
+  //     const response = await $strapi.$posts.find()
+  //     store.commit('setPosts', response)
+  //   } catch (e) {
+  //     const err = error(e)
+  //     error = err.message
+  //     return error
+  //   }
+  // },
   data () {
     return {
-      posts: [],
+      // posts: [],
       error: null
     }
   },
-  async fetch () {
+  async fetch ({ $strapi, store, error }) {
     try {
-      this.posts = await this.$strapi.$posts.find()
+      const res = await $strapi.$posts.find()
+      // const { posts: res } = await $strapi.graphql({
+      //   query: `
+      //     query {
+      //       posts {
+      //         _id
+      //         title
+      //         body
+      //       }
+      //     }
+      //   `
+      // })
+      // eslint-disable-next-line no-console
+      console.log('response = ', res)
+      store.commit('setPosts', res)
+    } catch (error) {
+      this.error = await error
+      return this.error
+    }
+  },
+  computed: {
+    ...mapGetters({
+      posts: 'allPosts'
+    })
+  },
+  async mounted () {
+    try {
       // eslint-disable-next-line no-console
       console.log(await this.$strapi.$posts.find())
     } catch (error) {
       this.error = error
     }
   },
-  fetchOnServer: false,
+  fetchOnServer: true,
   // fetchKey: 'post'
   fetchKey (getCounter) {
     // getCounter is a method that can be called to get the next number in a sequence
@@ -72,9 +133,23 @@ export default {
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  justify-content: flex-start;
+  align-items: stretch;
   text-align: center;
+  align-content: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.post {
+  background: rgba( 255, 255, 255, 0.25 );
+  box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+  backdrop-filter: blur( 4px );
+  -webkit-backdrop-filter: blur( 4px );
+  border-radius: 10px;
+  border: 1px solid rgba( 255, 255, 255, 0.18 );
+  margin: 2em;
 }
 
 .title {

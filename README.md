@@ -1,4 +1,4 @@
-# nuxt-on-vercel
+# nuxt
 
 ## Build Setup
 
